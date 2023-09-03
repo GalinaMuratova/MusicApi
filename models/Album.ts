@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
 import Artist from "./Artist";
-import albumsRouter from "../routers/albums";
 
 const Schema = mongoose.Schema;
 
-const albumSchema = new Schema({
+const AlbumSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -22,9 +21,10 @@ const albumSchema = new Schema({
         type: String,
         required: true
     },
-    image:String
+    image:String,
+
 });
 
-const Album = mongoose.model('Album', albumSchema);
+const Album = mongoose.model('Album', AlbumSchema);
 export default Album;
 
