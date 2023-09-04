@@ -13,7 +13,7 @@ albumsRouter.get('/', async(req, res) => {
             const albums = await Album.find({artist: req.query.artist});
             return res.send(albums);
         } else {
-            const albums = await Album.find();
+            const albums = await Album.find().populate('artist', 'name');
             return res.send(albums);
         }
     } catch {
@@ -27,7 +27,7 @@ albumsRouter.get('/:id', async(req, res) => {
        if (!album) {
            return res.sendStatus(404);
        }
-       return  res.send(album);
+       return res.send(album);
    } catch {
        return res.sendStatus(500);
    }
