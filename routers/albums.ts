@@ -9,11 +9,28 @@ const albumsRouter = express.Router();
 
 albumsRouter.get('/', async(req, res) => {
     try {
-        const albums = await Album.find();
-        return res.send(albums);
+        if (req.query.artist) {
+            const albums = await Album.find({artist: req.query.artist});
+            return res.send(albums);
+        } else {
+            const albums = await Album.find();
+            return res.send(albums);
+        }
     } catch {
         return res.sendStatus(500);
     }
+});
+
+albumsRouter.get('/:id', async(req, res) => {
+   try {
+       const album = await Album.findById(req.params.id).populate('artist','name');
+       if (!album) {
+           return res.sendStatus(404);
+       }
+       return  res.send(album);
+   } catch {
+       return res.sendStatus(500);
+   }
 });
 
 albumsRouter.post('/', imagesUpload.single('image'), async (req, res, next) => {
